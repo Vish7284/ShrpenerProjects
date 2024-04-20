@@ -33,6 +33,9 @@ function App() {
 
     setIsLoading(false);
   }
+  useEffect(()=>{
+    fetchMovieHandler();
+  },[])
 
   const retryFetch =()=>{
 const timer = setTimeout(fetchMovieHandler,5000);
