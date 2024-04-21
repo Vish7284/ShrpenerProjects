@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import MoviesList from "./components/MoviesList";
 import "./App.css";
+import NewMoviesForm from "./components/NewMoviesForm";
 
 function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [retryTimer,setRetryTimer] = useState(null)
-  async function fetchMovieHandler() {
+  const fetchMovieHandler=useCallback(async()=>{
     setIsLoading(true);
     setError(null);
     try {
@@ -32,7 +33,7 @@ function App() {
     }
 
     setIsLoading(false);
-  }
+  });
   useEffect(()=>{
     fetchMovieHandler();
   },[])
@@ -57,8 +58,13 @@ setRetryTimer(timer);
     content = <p>Loading...</p>;
   }
 
+  const onAddNewMovie = (movie) => {
+    setMovies((prevMovies) => [...prevMovies, movie]);
+  };
+
   return (
     <React.Fragment>
+      <section><NewMoviesForm onAdd={onAddNewMovie} /></section>
       <section>
         <button onClick={fetchMovieHandler}>Fetch Movies</button>
       </section>
