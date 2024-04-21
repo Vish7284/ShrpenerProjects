@@ -1,4 +1,5 @@
 import React,{useState} from "react";
+import './NewMoviesForm.css';
 const NewMoviesForm = (props)=>{
     const [title,setTitle] = useState("");
     const [descri,setDescri] = useState("")
@@ -28,13 +29,37 @@ const dateChangeHandler=(e)=>{
       
     };
     return (
-      <form onSubmit={submitHandler}>
-        <label htmlFor="title">Title</label>
-        <input id="title" type="text" value={title} onChange={titleChangeHandler}/><br/>
-        <label htmlFor="note">Opening Note</label>
-        <textarea id="note" type="text" value={descri} onChange={descriChangeHandler}></textarea><br/>
-        <label htmlFor="date">Release Date</label>
-        <input type="date" id="date" value={date} onChange={dateChangeHandler}/><br/>
+      <form onSubmit={submitHandler} className="movie-form">
+        <div className="form-group">
+          <label htmlFor="title">Title</label>
+          <input
+            id="title"
+            type="text"
+            value={title}
+            onChange={titleChangeHandler}
+            className="input-capsule"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="note">Opening Note</label>
+          <textarea
+            id="note"
+            type="text"
+            value={descri}
+            onChange={descriChangeHandler}
+            className="input-capsule"
+          ></textarea>
+        </div>
+        <div className="form-group">
+          <label htmlFor="date">Release Date</label>
+          <input
+            type="date"
+            id="date"
+            value={date}
+            onChange={dateChangeHandler}
+            className="input-capsule"
+          />
+        </div>
         <button>Add Movie</button>
       </form>
     );

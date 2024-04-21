@@ -1,0 +1,32 @@
+
+.movie-form {
+  max-width: 400px; /* Adjust as needed */
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-capsule {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px; /* Adjust the value to change the roundness of the capsule */
+  font-size: 16px;
+  box-sizing: border-box; /* Ensure padding doesn't increase the width */
+}
+
+textarea.input-capsule {
+  height: 100px; /* Adjust the height of the textarea */
+}
+
+
+button:hover {
+  background-color: #0056b3; /* Adjust color as needed */
+}
