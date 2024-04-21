@@ -15,6 +15,9 @@ const MovieList = (props) => {
     setMovies(updatedList);
 }catch(error){
   console.log("error deleteing movies",error);
+
+
+  
 }
     
   }
