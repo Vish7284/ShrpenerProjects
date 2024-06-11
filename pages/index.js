@@ -1,5 +1,6 @@
-import { title } from "process";
+
 import MeetupList from "../components/meetups/MeetupList";
+
 
 const DummyMeetup = [
   {
@@ -19,8 +20,33 @@ const DummyMeetup = [
     description:"The Last Meet",
   },
 ];
-const HomePage = () => {
-  return <MeetupList meetups={DummyMeetup} />;
+const HomePage = (props) => {
+// const [loadesMeet , setLoadedMeet] = useState([])
+//     useEffect(()=>{
+//         setLoadedMeet(DummyMeetup)
+//     },[])
+
+  return <MeetupList meetups={props.meetups} />;
 };
+
+
+// export async function getServerSideProps(context) {
+
+//     const req = context.req;
+//     const res = context.res;
+//   return {
+//     props: {
+//       meetups: DummyMeetup,
+//     },
+//   };
+// }
+export async function getStaticProps() {
+    return({
+        props:{
+            meetups :DummyMeetup,
+        },
+        revalidate : 1,
+})
+}
 
 export default HomePage;
