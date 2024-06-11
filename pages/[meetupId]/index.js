@@ -1,38 +1,49 @@
-import MeetDetail from "../../components/meetups/MeetDetail";
 
+import MeetDetail from "../../components/meetups/MeetDetail";
+import { MongoClient,ObjectId } from "mongodb";
 const MeetDetails = (props) => {
   return (
     <MeetDetail
-      image="https://www.crafttrip.in/image/cache/catalog/radha-krishna/radha-krishna-painting-with-peacock-feather-and-krishna-flute-800x534w.jpeg"
-      title="The First MeetUp"
-      address="Some city near the village"
-      description="The last and final meet"
+      image={props.meetUpData.image}
+      title={props.meetUpData.title}
+      address={props.meetUpData.address}
+      description={props.meetUpData.description}
     />
   );
 };
 
 export async function getStaticPaths(){
+    const client = await MongoClient.connect(
+      "mongodb+srv://vishal:4eTKheKtErJmIBQd@cluster0.f8itl6g.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    );
+    const db = client.db();
+    const meetupCollection = db.collection("meetups");
+    const meetups = await meetupCollection.find({},{_id:1}).toArray();
+    client.close();
     return {
         fallback :false,
-        paths:[
-            {params : {meetupId:"m1"}},
-            {params : {meetupId:"m2"}},
-            {params : {meetupId:"m3"}}
-        ]
+        paths: meetups.map(meet => ({params:{meetupId:meet._id.toString()}})),
     }
 }
 export async function getStaticProps(context) {
     const meetupId = context.params.meetupId;
-    console.log(meetupId);
-  return {
+const client = await MongoClient.connect(
+      "mongodb+srv://vishal:4eTKheKtErJmIBQd@cluster0.f8itl6g.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    );
+    const db = client.db();
+    const meetupCollection = db.collection("meetups");
+    const selectedMeetUp = await meetupCollection.findOne({
+      _id: new ObjectId(meetupId),
+    });
+    client.close();  return {
     props: {
         meetUpData :{
-        id:meetupId,
-      image:"https://www.crafttrip.in/image/cache/catalog/radha-krishna/radha-krishna-painting-with-peacock-feather-and-krishna-flute-800x534w.jpeg",
-      title:"The First MeetUp",
-      address:"Some city near the village",
-      description:"The last and final meet",
-    },
+            id:selectedMeetUp._id.toString(),
+            image:selectedMeetUp.image,
+            address:selectedMeetUp.address,
+            title:selectedMeetUp.title,
+            description:selectedMeetUp.description,
+        },
 }
   };
 }
