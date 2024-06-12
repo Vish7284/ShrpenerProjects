@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import Head from "next/head";
 import MeetupList from "../components/meetups/MeetupList";
 
 const HomePage = (props) => {
@@ -7,7 +8,15 @@ const HomePage = (props) => {
   //         setLoadedMeet(DummyMeetup)
   //     },[])
 
-  return <MeetupList meetups={props.meetups} />;
+  return (
+    <>
+    <Head>
+        <title>React MeetUps</title>
+        <meta name="description" content="Browse a list of the RadheKrishna meets of the last time"/>
+    </Head>
+      <MeetupList meetups={props.meetups} />
+    </>
+  );
 };
 
 // export async function getServerSideProps(context) {
@@ -22,7 +31,7 @@ const HomePage = (props) => {
 // }
 export async function getStaticProps() {
   const client = await MongoClient.connect(
-    "mongodb+srv://vishal:4eTKheKtErJmIBQd@cluster0.f8itl6g.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    "mongodb+srv://vishal:S4iMKeQrV8vjqjnH@cluster0.f8itl6g.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
   );
   const db = client.db();
   const meetupCollection = db.collection("meetups");

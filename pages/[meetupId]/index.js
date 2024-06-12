@@ -1,20 +1,30 @@
 
 import MeetDetail from "../../components/meetups/MeetDetail";
 import { MongoClient,ObjectId } from "mongodb";
+import Head from "next/head";
 const MeetDetails = (props) => {
   return (
-    <MeetDetail
-      image={props.meetUpData.image}
-      title={props.meetUpData.title}
-      address={props.meetUpData.address}
-      description={props.meetUpData.description}
-    />
+    <>
+      <Head>
+        <title>{props.meetUpData.title} MeetUps</title>
+        <meta
+          name="description"
+          content="your meet up details "
+        />
+      </Head>
+      <MeetDetail
+        image={props.meetUpData.image}
+        title={props.meetUpData.title}
+        address={props.meetUpData.address}
+        description={props.meetUpData.description}
+      />
+    </>
   );
 };
 
 export async function getStaticPaths(){
     const client = await MongoClient.connect(
-      "mongodb+srv://vishal:4eTKheKtErJmIBQd@cluster0.f8itl6g.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+      "mongodb+srv://vishal:S4iMKeQrV8vjqjnH@cluster0.f8itl6g.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
     );
     const db = client.db();
     const meetupCollection = db.collection("meetups");
@@ -28,8 +38,8 @@ export async function getStaticPaths(){
 export async function getStaticProps(context) {
     const meetupId = context.params.meetupId;
 const client = await MongoClient.connect(
-      "mongodb+srv://vishal:4eTKheKtErJmIBQd@cluster0.f8itl6g.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-    );
+  "mongodb+srv://vishal:S4iMKeQrV8vjqjnH@cluster0.f8itl6g.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+);
     const db = client.db();
     const meetupCollection = db.collection("meetups");
     const selectedMeetUp = await meetupCollection.findOne({
